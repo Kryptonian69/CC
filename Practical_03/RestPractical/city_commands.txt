@@ -1,0 +1,31 @@
+# CITY CRUD COMMANDS (Port 5004)
+
+## 1. CREATE (POST)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5004/cities" -Method Post -ContentType "application/json" -Body '{"City_Name":"Mumbai","District_Name":"Mumbai City","Population":12000000}'
+
+# Postman:
+# Method: POST, URL: http://localhost:5004/cities
+# Body -> raw -> JSON: {"City_Name":"Mumbai","District_Name":"Mumbai City","Population":12000000}
+
+## 2. READ ALL (GET)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5004/cities" -Method Get
+
+# Postman:
+# Method: GET, URL: http://localhost:5004/cities
+
+## 3. UPDATE (PUT)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5004/cities/1" -Method Put -ContentType "application/json" -Body '{"Population":13000000}'
+
+# Postman:
+# Method: PUT, URL: http://localhost:5004/cities/1
+# Body -> raw -> JSON: {"Population":13000000}
+
+## 4. DELETE
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5004/cities/1" -Method Delete
+
+# Postman:
+# Method: DELETE, URL: http://localhost:5004/cities/1

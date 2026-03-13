@@ -1,0 +1,31 @@
+# EMPLOYEE CRUD COMMANDS (Port 5001)
+
+## 1. CREATE (POST)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5001/employees" -Method Post -ContentType "application/json" -Body '{"Employee_Name":"Alice Smith","age":30,"Phone_no":"9123456780","Department":"HR"}'
+
+# Postman:
+# Method: POST, URL: http://localhost:5001/employees
+# Body -> raw -> JSON: {"Employee_Name":"Alice Smith","age":30,"Phone_no":"9123456780","Department":"HR"}
+
+## 2. READ ALL (GET)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5001/employees" -Method Get
+
+# Postman:
+# Method: GET, URL: http://localhost:5001/employees
+
+## 3. UPDATE (PUT)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5001/employees/1" -Method Put -ContentType "application/json" -Body '{"Department":"IT"}'
+
+# Postman:
+# Method: PUT, URL: http://localhost:5001/employees/1
+# Body -> raw -> JSON: {"Department":"IT"}
+
+## 4. DELETE
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5001/employees/1" -Method Delete
+
+# Postman:
+# Method: DELETE, URL: http://localhost:5001/employees/1

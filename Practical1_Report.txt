@@ -1,0 +1,149 @@
+# Practical 1: Currency Conversion Service (Node.js, Java, and .NET)
+
+## 1. Objective
+Define a simple service for converting Indian Rupees (Rs) into Dollars (USD) and call it from different platforms like JAVA and .NET.
+
+## 2. Software Requirements
+*   Code Editor: Visual Studio Code
+*   API Testing: Postman
+*   Runtime Environment: Node.js
+*   Programming Languages: JavaScript (Express.js), Java (JDK), C# (.NET SDK)
+
+## 3. Project Setup
+Create a main folder named Cloud_Computing_Practical1 and set up the following folder structure:
+*   currency-conversion-service/ (Node.js Server)
+*   Java_Client/ (Java Application)
+*   NET_Client/ (NET Console App)
+
+IMAGEHERE: (Screenshot of your folder structure in File Explorer or VS Code)
+
+---
+
+## 4. Implementing the Service (Node.js & Express)
+
+### Step 1: Initialize the Project
+In the currency-conversion-service folder, initialize npm and install dependencies:
+```bash
+npm init -y
+npm install express body-parser
+```
+
+### Step 2: Create server.js
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+
+app.post('/convert', (req, res) => {
+    const amountInRs = req.body.amount_in_rs;
+    const conversionRate = 0.0145;
+    const amountInUsd = amountInRs * conversionRate;
+    res.json({ amount_in_usd: amountInUsd });
+});
+
+app.listen(port, () => {
+    console.log(`Currency conversion service running on http://localhost:${port}`);
+});
+```
+
+### Step 3: Run the Server
+```bash
+node server.js
+```
+IMAGEHERE: (Screenshot of the terminal showing the server running)
+
+---
+
+## 5. Testing with Postman
+1.  Open Postman and create a new POST request.
+2.  Enter URL: http://localhost:3000/convert
+3.  In Body > raw > JSON, enter:
+    { "amount_in_rs": 1000 }
+4.  Click Send.
+
+IMAGEHERE: (Screenshot of Postman showing the 14.5 USD response)
+
+---
+
+## 6. Implementing the Java Client
+
+### Step 1: Create JavaClient.java
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class JavaClient {
+    public static void main(String[] args) {
+        HttpClient client = HttpClient.newHttpClient();
+        String uri = "http://localhost:3000/convert";
+        String requestBody = "{ "amount_in_rs": 1000 }";
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(System.out::println)
+                .join();
+    }
+}
+```
+
+### Step 2: Compile and Run
+```bash
+javac JavaClient.java
+java JavaClient
+```
+IMAGEHERE: (Screenshot of terminal showing the Java output)
+
+---
+
+## 7. Implementing the .NET Client
+
+### Step 1: Initialize .NET Project
+In the NET_Client folder, run:
+```bash
+dotnet new console
+```
+
+### Step 2: Update Program.cs
+```csharp
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+class Program {
+    static async Task Main() {
+        var client = new HttpClient();
+        var apiUrl = "http://localhost:3000/convert";
+        var jsonRequestBody = "{"amount_in_rs": 1000}";
+
+        var response = await client.PostAsync(apiUrl, 
+            new StringContent(jsonRequestBody, Encoding.UTF8, "application/json"));
+
+        if (response.IsSuccessStatusCode) {
+            Console.WriteLine("Response Body: " + await response.Content.ReadAsStringAsync());
+        }
+    }
+}
+```
+
+### Step 3: Run the Client
+```bash
+dotnet run
+```
+IMAGEHERE: (Screenshot of terminal showing the .NET output)
+
+---
+
+## 8. Conclusion
+The practical successfully demonstrates a cross-platform architecture where a Node.js microservice provides a currency conversion API, which is then consumed by both Java and .NET clients using HTTP protocols.

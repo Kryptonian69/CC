@@ -1,0 +1,31 @@
+# STUDENT CRUD COMMANDS (Port 5000)
+
+## 1. CREATE (POST)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5000/students" -Method Post -ContentType "application/json" -Body '{"Student_Name":"Jane Smith","age":21,"Phone_no":"9988776655","Subject":"Cloud"}'
+
+# Postman:
+# Method: POST, URL: http://localhost:5000/students
+# Body -> raw -> JSON: {"Student_Name":"Jane Smith","age":21,"Phone_no":"9988776655","Subject":"Cloud"}
+
+## 2. READ ALL (GET)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5000/students" -Method Get
+
+# Postman:
+# Method: GET, URL: http://localhost:5000/students
+
+## 3. UPDATE (PUT)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5000/students/1" -Method Put -ContentType "application/json" -Body '{"age":22}'
+
+# Postman:
+# Method: PUT, URL: http://localhost:5000/students/1
+# Body -> raw -> JSON: {"age":22}
+
+## 4. DELETE
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5000/students/1" -Method Delete
+
+# Postman:
+# Method: DELETE, URL: http://localhost:5000/students/1

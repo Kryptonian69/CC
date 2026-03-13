@@ -1,0 +1,25 @@
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+class TemperatureProgram {
+    static async Task Main() {
+        Console.Write("Enter Temperature in Fahrenheit: ");
+        string f = Console.ReadLine();
+
+        var client = new HttpClient();
+        var apiUrl = "http://localhost:3000/convert";
+        var jsonBody = "{ \"fahrenheit\": " + f + " }";
+
+        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+        var response = await client.PostAsync(apiUrl, content);
+
+        if (response.IsSuccessStatusCode) {
+            string result = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Celsius Result: " + result);
+        } else {
+            Console.WriteLine("Error connecting to service.");
+        }
+    }
+}

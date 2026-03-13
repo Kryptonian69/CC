@@ -1,0 +1,31 @@
+# PLAYER CRUD COMMANDS (Port 5003)
+
+## 1. CREATE (POST)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5003/players" -Method Post -ContentType "application/json" -Body '{"Player_Name":"Virat Kohli","age":35,"Country":"India","Runs":13000}'
+
+# Postman:
+# Method: POST, URL: http://localhost:5003/players
+# Body -> raw -> JSON: {"Player_Name":"Virat Kohli","age":35,"Country":"India","Runs":13000}
+
+## 2. READ ALL (GET)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5003/players" -Method Get
+
+# Postman:
+# Method: GET, URL: http://localhost:5003/players
+
+## 3. UPDATE (PUT)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5003/players/1" -Method Put -ContentType "application/json" -Body '{"Runs":13500}'
+
+# Postman:
+# Method: PUT, URL: http://localhost:5003/players/1
+# Body -> raw -> JSON: {"Runs":13500}
+
+## 4. DELETE
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5003/players/1" -Method Delete
+
+# Postman:
+# Method: DELETE, URL: http://localhost:5003/players/1

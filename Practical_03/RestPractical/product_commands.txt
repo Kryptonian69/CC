@@ -1,0 +1,31 @@
+# PRODUCT CRUD COMMANDS (Port 5002)
+
+## 1. CREATE (POST)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5002/products" -Method Post -ContentType "application/json" -Body '{"Product_Name":"Laptop","Quantity":10,"Expiry_date":"2027-12-31"}'
+
+# Postman:
+# Method: POST, URL: http://localhost:5002/products
+# Body -> raw -> JSON: {"Product_Name":"Laptop","Quantity":10,"Expiry_date":"2027-12-31"}
+
+## 2. READ ALL (GET)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5002/products" -Method Get
+
+# Postman:
+# Method: GET, URL: http://localhost:5002/products
+
+## 3. UPDATE (PUT)
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5002/products/1" -Method Put -ContentType "application/json" -Body '{"Quantity":15}'
+
+# Postman:
+# Method: PUT, URL: http://localhost:5002/products/1
+# Body -> raw -> JSON: {"Quantity":15}
+
+## 4. DELETE
+# PowerShell:
+Invoke-RestMethod -Uri "http://localhost:5002/products/1" -Method Delete
+
+# Postman:
+# Method: DELETE, URL: http://localhost:5002/products/1
