@@ -1,0 +1,50 @@
+Practical No. 9: Implementation of OpenStack with User and Private Network Creation
+1. Aim
+To implement OpenStack with user and private network creation.
+2. Prerequisites & Requirements
+Operating System: A Linux Virtual Machine running Ubuntu 18.04.
+Hardware: The virtual machine must have at least 4GB of memory allocated.
+Network: A stable and proper internet connection is essential for downloading the repository packages.
+3. Procedure
+Step 1: Update the Ubuntu System Open the terminal and ensure the system repositories and installed packages are completely up to date.
+sudo apt update
+sudo apt -y upgrade
+sudo apt -y dist-upgrade
+After the update completes, reboot the system to apply the changes.
+sudo reboot
+Step 2: Create a Dedicated "Stack" User DevStack must be run as a regular, non-root user that has sudo privileges enabled. Create a new user specifically named "stack":
+sudo useradd -s /bin/bash -d /opt/stack -m stack
+Assign password-less sudo privileges to this newly created user:
+echo "stack ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/stack
+Switch over to the stack user account to continue the installation:
+sudo su stack
+Step 3: Install Git Ensure Git is installed on the system to allow downloading of the DevStack repository.
+sudo apt install git -y
+Step 4: Download OpenStack (DevStack) Clone the DevStack installation files directly from the official GitHub repository.
+Sudo git clone https://git.openstack.org/openstack-dev/devstack
+Step 5: Create the Configuration File Navigate into the newly downloaded DevStack directory:
+cd devstack
+Create a local.conf file to store the administrative passwords and define the host system's IP address. You can find your system's IP by running the ifconfig or ip addr command.
+[[local|localrc]]
+# Password for KeyStone, Database, RabbitMQ and Service
+ADMIN_PASSWORD=StrongAdminSecret
+DATABASE_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+
+
+# Host IP
+HOST_IP=192.168.56.103
+Step 6: Execute the Installation Start the automated DevStack installation script.
+./stack.sh
+This script will install various OpenStack components, including Compute (Nova), Image Service (Glance), Identity (Keystone), Block Storage (Cinder), and the Horizon Dashboard. The installation process generally takes between 10 to 20 minutes depending on the internet speed.
+Step 7: Access the OpenStack Dashboard Once the installation finishes, the terminal will output an access link. Open a web browser and navigate to the Horizon URL: http://<IP Address>/dashboard. Log in using the default username (admin or demo) and the password you configured in Step 5 (StrongAdminSecret).
+Step 8: Provision an Instance From the OpenStack management web console dashboard, navigate to the Instances menu on the left side of the page. Click on Launch Instances, fill in the required configuration fields, and deploy the new virtual machine instance.
+
+4. Output / Observation
+The automated DevStack script successfully installed the core OpenStack services, including Nova, Glance, and Keystone.
+The OpenStack Horizon web management console was successfully accessed via a web browser using the host's IP address.
+A new virtual machine instance was successfully launched from within the OpenStack web dashboard.
+5. Conclusion
+We successfully installed and configured a single-node OpenStack cloud environment using DevStack. We learned how to provision a dedicated administrative user, configure cloud environment parameters, access the Horizon management dashboard, and deploy a virtual machine instance.
+

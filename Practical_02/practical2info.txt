@@ -1,0 +1,145 @@
+Based on the lab manual you provided, here is the step-by-step guide to performing **Practical No. 2**, which involves creating a simple SOAP service using Apache CXF and Maven.
+
+### **Objective: Create a Simple SOAP Service**
+
+**Prerequisites:**
+
+* Ensure **Java** is installed on your machine.
+
+
+* Download and install **Apache Maven**.
+
+
+
+---
+
+### **Step 1: Create a Maven Project**
+
+Open your terminal or command prompt and run the following command to generate a new project structure:
+
+```bash
+mvn archetype:generate -DgroupId=com.example -DartifactId=SimpleSOAPService -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+```
+
+### **Step 2: Add Dependencies**
+
+Navigate to your project directory and open the `pom.xml` file. Add the following dependencies for Apache CXF:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        <version>3.4.5</version>
+    </dependency>
+</dependencies>
+
+```
+
+### **Step 3: Create the Service Interface**
+
+Create a new Java file named `CalculatorService.java` inside your source folder (e.g., `src/main/java/com/example/`). Define the interface with `@WebService` and `@WebMethod` annotations.
+
+**File:** `CalculatorService.java`
+
+```java
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+@WebService
+public interface CalculatorService {
+    @WebMethod
+    int add(int num1, int num2);
+    
+    @WebMethod
+    int subtract(int num1, int num2);
+}
+
+```
+
+### **Step 4: Implement the Service**
+
+Create a class that implements the interface you just created.
+
+**File:** `CalculatorServiceImpl.java`
+
+```java
+import javax.jws.WebService;
+
+@WebService(endpointInterface = "com.example.CalculatorService")
+public class CalculatorServiceImpl implements CalculatorService {
+    
+    @Override
+    public int add(int num1, int num2) {
+        return num1 + num2;
+    }
+
+    @Override
+    public int subtract(int num1, int num2) {
+        return num1 - num2;
+    }
+}
+
+```
+
+### **Step 5: Configure CXF**
+
+Create a configuration file named `cxf.xml` in the `src/main/resources` directory to define the endpoint beans.
+
+**File:** `src/main/resources/cxf.xml`
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+
+    <bean id="calculatorService" class="com.example.CalculatorServiceImpl" />
+    
+    <jaxws:endpoint id="calculatorEndpoint"
+                    implementor="#calculatorService"
+                    address="/CalculatorService" />
+</beans>
+
+```
+
+*(Note: The XML namespaces were inferred to correct standard Spring/CXF formatting based on the provided text fragment)*.
+
+### **Step 6: Build and Run**
+
+Execute the following commands in your project directory to build and run the service.
+
+1. **Build the project:**
+```bash
+mvn clean install
+
+```
+
+
+
+
+2. **Run the service:**
+```bash
+mvn exec:java
+
+```
+
+
+
+
+
+### **Step 7: Test the Service**
+
+Once the service is running, you can verify it by accessing the WSDL (Web Services Description Language) URL in your browser:
+
+* **Service URL:** `http://localhost:8080/CalculatorService`
+* **WSDL:** `http://localhost:8080/CalculatorService?wsdl`
+
+You can test the functionality using a tool like **SOAPUI** or by writing a simple Java client.
+
+Would you like me to explain how to write the Java Client to test this, as shown in the previous practical example?
